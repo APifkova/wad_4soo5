@@ -16,8 +16,8 @@ class Film(models.Model):
 
 
 class Rating(models.Model):
-    userID = models.IntegerField()
-    filmID = models.IntegerField()
+    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    filmID = models.ForeignKey(Film, on_delete=models.CASCADE)
     rating = models.IntegerField(validators = [MinValueValidator(0),MaxValueValidator(5)])
 
 class User(AbstractUser):
