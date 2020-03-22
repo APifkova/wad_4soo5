@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>Title
+{% block title_block %}
+    Homepage
+{% endblock %}
+
+{% block body_block %}
+    <h2>Highest Rated</h2>
+    {% if films %}
+        <ul>
+            {% for film in films %}
+                <li>
+                    <a href="{% url 'rango:show_film' film.slug%}">{{ film.title }} : {{ film.score }}/5</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no films</strong>
+    {% endif %}
+
+    <h2>Recent reviews</h2>
+    {% if reviews %}
+        <ul>
+            {% for review in reviews %}
+                <li>
+                    {{review.reviewerID}} reviewed: {{review.fkID}}. At {{review.date}}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>No recent reviews</strong>
+    {% endif %}
+
+
+{% endblock %}
