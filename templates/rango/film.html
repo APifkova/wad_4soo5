@@ -17,5 +17,8 @@
             {{review.reviewerID}} {{review.date}} {{review.rating}}/5
         </li>
         {% endfor %}
+
+    {% else %}
+        <strong>Error, this film does not exist.</strong>
     {% endif %}
 {% endblock %}

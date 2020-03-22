@@ -18,7 +18,7 @@ from django.contrib.auth.models import User
 # Create your views here.
 def home(request):
     film_list = Film.objects.order_by('rating')[:5]
-    review_list = Review.objects.order_by('date')[:5]
+    review_list = Review.objects.order_by('-date')[:5]
 
     context_dict = {}
 
@@ -35,7 +35,7 @@ def show_film(request, film_name_slug):
     context_dict={}
     try:
         film = Film.objects.get(slug=film_name_slug)
-        reviews = Review.objects.filter(fkID = film.filmID)
+        reviews = Review.objects.filter(fkID = film.filmID).order_by('-date')
 
         context_dict['film'] = film
         context_dict['reviews'] = reviews
