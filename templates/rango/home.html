@@ -23,7 +23,7 @@
         <ul>
             {% for review in reviews %}
                 <li>
-                    {{review.reviewerID}} reviewed: {{review.fkID}}. At {{review.date}}
+                    <a href="{% url 'rango:show_reviewer' review.reviewerID.slug%}">{{review.reviewerID}}</a> left a review for: <a href="{% url 'rango:show_film' review.fkID.slug %}">{{review.fkID}}</a>. At {{review.date}}
                 </li>
             {% endfor %}
         </ul>

@@ -44,3 +44,18 @@ def show_film(request, film_name_slug):
         context_dict['reviews'] = None
 
     return render(request, 'film.html',context=context_dict)
+
+def show_reviewer(request, reviewer_name_slug):
+    context_dict={}
+    try:
+        reviewer = Reviewer.objects.get(slug=reviewer_name_slug)
+        reviews = Review.objects.filter(reviewerID = reviewer).order_by('-date')
+
+        context_dict['reviewer'] = reviewer
+        context_dict['reviews'] = reviews
+    except Review.DoesNotExist:
+        context_dict['reviewer'] = None
+        context_dict['reviews'] = None
+
+
+    return render(request, 'reviewer.html', context=context_dict)

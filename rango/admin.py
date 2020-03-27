@@ -9,8 +9,13 @@ class FilmAdmin(admin.ModelAdmin):
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('fkID','rating','date')
 
+
+class ReviewerAdmin(admin.ModelAdmin):
+    list_display = ('displayName','slug')
+    prepopulated_fields = {'slug':('displayName',)}
+
 admin.site.register(Film,FilmAdmin)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(Rating)
 admin.site.register(User)
-admin.site.register(Reviewer)
+admin.site.register(Reviewer, ReviewerAdmin)

@@ -12,11 +12,15 @@
 {% block body_block %}
     {% if film %}
         <h1>{{film.title}}</h1>
-        {% for review in reviews %}
-        <li>
-            {{review.reviewerID}} {{review.date}} {{review.rating}}/5
-        </li>
-        {% endfor %}
+        {% if reviews %}
+            {% for review in reviews %}
+            <li>
+                {{review.reviewerID}} {{review.date}} {{review.rating}}/5
+            </li>
+            {% endfor %}
+        {% else %}
+            <strong>There are no reviews for this movie.</strong>
+        {% endif %}
 
     {% else %}
         <strong>Error, this film does not exist.</strong>

@@ -51,6 +51,13 @@ class Reviewer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
     displayName = models.CharField(max_length = 128)
     profilePicture = models.ImageField()
+    User.is_reviewer = True
+
+    slug = models.SlugField(unique=True, null=False)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.displayName)
+        super(Reviewer, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.displayName
@@ -63,7 +70,8 @@ class Review(models.Model):
     date = models.DateTimeField()
 
 class Admin(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
+    User.is_admin = True
 
 
 
