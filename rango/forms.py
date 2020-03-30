@@ -1,0 +1,56 @@
+from django import forms
+from rango.models import *
+from django.contrib.auth.forms import UserCreationForm
+
+class FilmForm(forms.ModelForm):
+    filmID = forms.CharField(widget = forms.HiddenInput(), required = False)
+    title = forms.CharField(max_length = 128, help_text="Enter the film title.")
+    director = forms.CharField(max_length = 128, help_text="Directors Name.")
+    releaseDate = forms.DateField(help_text="Release Date. [YEAR-MONTH-DAY]")
+    blurb = forms.CharField(max_length = 512, help_text="Film Blurb.")
+    poster = forms.ImageField(help_text="Film Poster.", required=False)
+    slug = forms.SlugField(widget=forms.HiddenInput(), required = False)
+
+
+
+    class Meta:
+        model = Film
+        fields=('title','director','releaseDate','blurb','poster')
+
+class ReviewForm(forms.ModelForm):
+    reviewerID = forms.CharField(widget=forms.HiddenInput(),required=False)
+    fkID = forms.CharField(widget=forms.HiddenInput(),required=False)
+    mainBody = forms.CharField(max_length = 1000, help_text="Review Body.")
+    rating = forms.IntegerField(min_value = 0, max_value = 5, help_text="Rating 0-5")
+    date = forms.DateTimeField(widget = forms.HiddenInput(), required = False)
+
+    class Meta:
+        model = Review
+        exclude=('reviewerID','fkID',)
+
+class RatingForm(forms.ModelForm):
+    #userID = forms.ForeignKey(User)
+    #fkID = forms.ForeignKey(Film)
+    rating = forms.IntegerField(max_value = 5, min_value = 0,help_text="Score 1-5")
+
+    class Meta:
+        model = Rating
+        exclude=(''),
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+class ReviewerForm(forms.ModelForm):
+    user = forms.ChoiceField(required=False)
+    displayName = forms.CharField(max_length=20)
+    profilePicture = forms.ImageField(required=False)
+    slug = forms.CharField(widget=forms.HiddenInput(),required=False)
+
+    class Meta:
+        model = Reviewer
+        fields = ('displayName','profilePicture')
+

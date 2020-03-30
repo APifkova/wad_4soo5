@@ -25,6 +25,13 @@
         <ul>
             <li><a href="{% url 'rango:about' %}">About</li>
             <li><a href="{% url 'rango:home' %}">Home</a></li>
+            {{user}}
+            {% if user.is_reviewer %}
+                <li><a href="{% url 'rango:show_reviewer' user %}">My Reviewer Page</a></li>
+            {% endif %}
+            {% if user.is_admin %}
+                <li><a href = "{% url 'rango:add_film' %}">ADD FILM</a></li>
+            {% endif %}
         </ul>
     </div>
     </body>

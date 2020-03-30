@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
 from django.db.models import Avg
+from datetime import datetime
 
 # Create your models here.
 class Film(models.Model):
@@ -31,7 +32,20 @@ class Film(models.Model):
                 return fkID['rating__avg']
         return 2.5
 
+    def rate2(self):
+        rec = Rating.objects.values('fkID').annotate(Avg('rating'))
+        for fkID in rec:
+            if fkID['fkID'] == self.filmID:
+                mod = Film.objects.get(filmID = fkID['fkID'])
+                mod.rating = fkID['rating__avg']
+                mod.save()
+                return fkID['rating__avg']
+        return 2.5
+
     score = property(rate)
+    userRate = property(rate2)
+
+
 
     def __str__(self):
         return self.title
@@ -51,13 +65,15 @@ class Reviewer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
     displayName = models.CharField(max_length = 128)
     profilePicture = models.ImageField()
-    User.is_reviewer = True
+
 
     slug = models.SlugField(unique=True, null=False)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.displayName)
+
+        self.slug = slugify(self.user)
         super(Reviewer, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return self.displayName
@@ -67,11 +83,11 @@ class Review(models.Model):
     fkID = models.ForeignKey(Film, on_delete=models.CASCADE)
     mainBody = models.CharField(max_length = 1000)
     rating = models.IntegerField(validators = [MinValueValidator(0),MaxValueValidator(5)])
-    date = models.DateTimeField()
+    date = models.DateTimeField(default = datetime.now)
 
 class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
-    User.is_admin = True
+    user.is_admin = True
 
 
 

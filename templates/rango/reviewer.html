@@ -5,10 +5,16 @@
 {% endblock %}
 
 {% block body_block %}
+    {{user}}
     <h2>Highest Rated</h2>
     {% if reviewer %}
         {{reviewer.displayName}}
     {% else %}
+
+    {% if user.is_reviewer %}
+        <a href="{% url 'rango:add_reviewer' user %}">{{user}}</a>
+    {% endif %}
+
         <strong>Reviewer does not exist</strong>
     {% endif %}
 
@@ -22,6 +28,9 @@
             {% endfor %}
         </ul>
     {% else %}
+        {% if reviewer == user %}
+            <strong> You are him </strong>
+        {% endif %}
         <strong>No recent reviews</strong>
     {% endif %}
 
