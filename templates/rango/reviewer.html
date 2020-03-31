@@ -5,34 +5,41 @@
 {% endblock %}
 
 {% block body_block %}
-    {{user}}
-    <h2>Highest Rated</h2>
     {% if reviewer %}
-        {{reviewer.displayName}}
-    {% else %}
+    <h2>{{reviewer}}</h2>
+        {% if user == reviewer.user %}
+            Welcome to your profile, {{user}}.</p>
+            <a href = "{% url 'rango:add_reviewer' user %}">Edit Profile</a>
+        {% endif %}
 
-    {% if user.is_reviewer %}
-        <a href="{% url 'rango:add_reviewer' user %}">{{user}}</a>
-    {% endif %}
-
-        <strong>Reviewer does not exist</strong>
-    {% endif %}
-
+        {% if reviewer.profilePicture %}
+            </p><img src="{{reviewer.profilePicture.url}}"/>
+        {% endif %}
+        </p> User: {{reviewer.displayName}}
+        </p> Member since: {{reviewer.user.date_joined}}
+        </p> Number of reviews : {{reviews.count}}
     <h2>Recent reviews</h2>
     {% if reviews %}
         <ul>
             {% for review in reviews %}
                 <li>
-                    {{review.reviewerID}} left a review for: <a href="{% url 'rango:show_film' review.fkID.slug %}">{{review.fkID}}</a>. At {{review.date}}
+                    <strong>Reviewed : <a href="{% url 'rango:show_film' review.fkID.slug %}">{{review.fkID}}</a>. At {{review.date}}</strong>
+                    </br>-{{review.mainBody}} [{{review.rating}}/5]
                 </li>
             {% endfor %}
         </ul>
-    {% else %}
-        {% if reviewer == user %}
-            <strong> You are him </strong>
+        {% else %}
+            <strong>No recent reviews</strong>
         {% endif %}
-        <strong>No recent reviews</strong>
+    {% else %}
+        <strong>This reviewer does not exist yet.</strong></br>
+
+        {% if user.is_reviewer %}
+            <a href="{% url 'rango:add_reviewer' user %}">Create or edit your reviewer profile here.</a>
+        {% endif %}
+
     {% endif %}
+
 
 
 {% endblock %}

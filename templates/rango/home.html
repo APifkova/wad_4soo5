@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body_block %}
-    <h2>Highest Rated</h2>
+    <h2>Highest Rated by Reviewers</h2>
     {% if films %}
         <ul>
             {% for film in films %}
@@ -23,7 +23,9 @@
         <ul>
             {% for review in reviews %}
                 <li>
-                    <a href="{% url 'rango:show_reviewer' review.reviewerID.slug%}">{{review.reviewerID}}</a> left a review for: <a href="{% url 'rango:show_film' review.fkID.slug %}">{{review.fkID}}</a>. At {{review.date}}
+                    <a href="{% url 'rango:show_reviewer' review.reviewerID.slug%}">{{review.reviewerID}}</a>
+                    left a review for: <a href="{% url 'rango:show_film' review.fkID.slug %}">{{review.fkID}}</a>.
+                    At {{review.date}}
                 </li>
             {% endfor %}
         </ul>

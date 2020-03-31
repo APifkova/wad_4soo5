@@ -6,8 +6,10 @@ from rango.models import Film
 from rango.models import Rating
 from rango.forms import *
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.core.exceptions import ValidationError
 
 from django.contrib.auth.decorators import login_required
 
@@ -115,12 +117,19 @@ def add_review(request, film_name_slug):
     except Film.DoesNotExist:
         film = None
 
+    try:
+        reviewer = Review.objects.filter(reviewerID = request.user.reviewer)
+        reviewer = reviewer.filter(fkID=film)
+    except Review.DoesNotExist:
+        reviewer = None
+
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
             review=form.save(commit=False)
             review.reviewerID = request.user.reviewer
-            review.fkID = film
+            review.fkID = Film.objects.get(slug=film_name_slug)
+
 
             review.save()
 
@@ -129,7 +138,37 @@ def add_review(request, film_name_slug):
         else:
             print(form.errors)
 
+    context_dict['reviewer'] = reviewer
     context_dict['form']=form
     context_dict['film']=film
 
     return render(request,'add_review.html',context=context_dict)
+
+def user_login(request):
+
+    context_dict={}
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request,user)
+                return redirect(reverse('rango:home'))
+            else:
+                context_dict['error'] = "Error, your account has been deactivated."
+                return render(request, 'login.html',context_dict)
+        else:
+            context_dict['error'] = "Error, invalid login details. Please try again."
+            return render(request, 'login.html', context_dict)
+    else:
+        context_dict['error'] = None
+        return render(request, 'login.html',context_dict)
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('rango:home'))

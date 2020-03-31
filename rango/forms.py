@@ -2,6 +2,7 @@ from django import forms
 from rango.models import *
 from django.contrib.auth.forms import UserCreationForm
 
+
 class FilmForm(forms.ModelForm):
     filmID = forms.CharField(widget = forms.HiddenInput(), required = False)
     title = forms.CharField(max_length = 128, help_text="Enter the film title.")
@@ -24,9 +25,11 @@ class ReviewForm(forms.ModelForm):
     rating = forms.IntegerField(min_value = 0, max_value = 5, help_text="Rating 0-5")
     date = forms.DateTimeField(widget = forms.HiddenInput(), required = False)
 
+
+
     class Meta:
         model = Review
-        exclude=('reviewerID','fkID',)
+        exclude=('reviewerID','fkID','date')
 
 class RatingForm(forms.ModelForm):
     #userID = forms.ForeignKey(User)
@@ -45,10 +48,11 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password')
 
 class ReviewerForm(forms.ModelForm):
-    user = forms.ChoiceField(required=False)
-    displayName = forms.CharField(max_length=20)
-    profilePicture = forms.ImageField(required=False)
+    user = forms.ChoiceField(widget=forms.HiddenInput,required=False)
+    displayName = forms.CharField(max_length=20, help_text="Enter your new display name.")
+    profilePicture = forms.ImageField(required=False, help_text="Choose your profile picture.")
     slug = forms.CharField(widget=forms.HiddenInput(),required=False)
+    date = forms.DateField(widget=forms.HiddenInput(),required=False)
 
     class Meta:
         model = Reviewer

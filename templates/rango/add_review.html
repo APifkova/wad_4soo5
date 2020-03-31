@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title_block %}
-    Reviewer Upgrade Registry
+    Reviewing {{film}}
 {% endblock %}
 
 {% block body_block %}
     {{user}}
     <h2>Register</h2>
-   <form id="review_form" method="post" action="{% url 'rango:add_review' user %}" enctype="multipart/form-data">
+    {% if reviewer %}
+        <strong>Error. You have already reviewed {{film}}.</strong>
+    {% else %}
+   <form id="review_form" method="post" action="{% url 'rango:add_review' film.slug %}" enctype="multipart/form-data">
        {% csrf_token %}
        {% for hidden in form.hidden_fields %}
             {{hidden.errors}}
@@ -24,6 +27,7 @@
 
        <input type = "submit" name = "submit" value="Register" />
    </form>
+    {% endif %}
 
 
 {% endblock %}

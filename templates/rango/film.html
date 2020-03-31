@@ -13,17 +13,22 @@
     {% if film %}
         <h1>{{film.title}}</h1>
         {% if reviews %}
+            Current reviewer rating: {{film.score}} -- Current user rating: {{film.userRate}}</br>
+        <ul>
             {% for review in reviews %}
             <li>
-                {{review.reviewerID}} {{review.date}} {{review.rating}}/5
+                <a href="{% url 'rango:show_reviewer' review.reviewerID.slug%}">{{review.reviewerID}}</a>
+                left a review at {{review.date}}
+                </br>-{{review.mainBody}} [{{review.rating}}/5]
             </li>
             {% endfor %}
+        </ul>
         {% else %}
             <strong>There are no reviews for this movie.</strong>
         {% endif %}
 
         {% if user.is_reviewer %}
-            <a href="{% url 'rango:add_review' film %}">Leave a review as {{user}}?</a>
+            <a href="{% url 'rango:add_review' film.slug %}">Leave a review as {{user}}?</a>
         {% endif %}
 
     {% else %}
