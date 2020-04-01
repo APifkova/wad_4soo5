@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.core.exceptions import ValidationError
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 from django.contrib.auth.decorators import login_required
 
@@ -17,6 +19,7 @@ from datetime import datetime
 
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
+from django.db.models.functions import Length
 #from rango.models import UserProfile
 
 # Create your views here.
@@ -144,6 +147,26 @@ def add_review(request, film_name_slug):
 
     return render(request,'add_review.html',context=context_dict)
 
+def register(request):
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            registered=True
+
+        else:
+            print(user_form.errors)
+
+
+    else:
+        user_form = UserForm()
+
+    return render(request, 'register.html', context= {'user_form':user_form,'registered':registered})
+
 def user_login(request):
 
     context_dict={}
@@ -172,3 +195,26 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect(reverse('rango:home'))
+
+def search(request):
+    context_dict = {}
+    url_parameter = request.GET.get("q")
+
+    if url_parameter:
+        films = Film.objects.filter(title__icontains=url_parameter).order_by(Length('title'))[:5]
+        reviewers = Reviewer.objects.filter(displayName__icontains=url_parameter).order_by(Length('displayName'))[:5]
+    else:
+        films = Film.objects.all().order_by(Length('title'))
+        reviewers = Reviewer.objects.all().order_by(Length('displayName'))
+
+    context_dict['films'] = films
+    context_dict['reviewers'] = reviewers
+
+    if request.is_ajax():
+        html = render_to_string(template_name="search-results-partial.html", context = {"films":films,"reviewers":reviewers})
+
+        data_dict = {"html_from_view": html}
+        return JsonResponse(data=data_dict, safe=False)
+
+
+    return render(request,"search.html",context=context_dict)

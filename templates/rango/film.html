@@ -10,8 +10,17 @@
 {% endblock %}
 
 {% block body_block %}
+    <div>
     {% if film %}
         <h1>{{film.title}}</h1>
+        {{film.releaseDate}}<p>
+        {{film.director}}<p>
+        {{film.blurb}}<p>
+        <img src="{{film.poster.url}}"><p>
+
+    </div>
+
+    </div>
         {% if reviews %}
             Current reviewer rating: {{film.score}} -- Current user rating: {{film.userRate}}</br>
         <ul>
@@ -26,6 +35,7 @@
         {% else %}
             <strong>There are no reviews for this movie.</strong>
         {% endif %}
+    </div>
 
         {% if user.is_reviewer %}
             <a href="{% url 'rango:add_review' film.slug %}">Leave a review as {{user}}?</a>

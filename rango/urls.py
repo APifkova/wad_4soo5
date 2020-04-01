@@ -12,5 +12,7 @@ urlpatterns = [
     path('user/add_reviewer/<slug:reviewer_name_slug>/', views.add_reviewer, name='add_reviewer'),
     path('add_film/', views.add_film, name='add_film'),
     path('login/', views.user_login, name='login'),
-    path('logout/', views.user_logout, name='logout')
+    path('logout/', views.user_logout, name='logout'),
+    path('register/', views.register, name='register'),
+    path('search/', views.search, name='search')
 ]

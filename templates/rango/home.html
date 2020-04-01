@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block body_block %}
+    {% if user.is_authenticated %}
+    <strong> Logged in as {{user}}</strong>
+    {% endif %}
     <h2>Highest Rated by Reviewers</h2>
     {% if films %}
         <ul>

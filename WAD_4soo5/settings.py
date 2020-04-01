@@ -61,7 +61,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'WAD_4soo5.urls'
 
-STATICFILES_DIRS = [STATIC_DIR,]
+STATICFILES_DIRS = [STATIC_DIR,
+                    os.path.join(BASE_DIR, "static/django-ajax-search/"),
+                    ]
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
 
 TEMPLATES = [
     {
