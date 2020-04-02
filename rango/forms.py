@@ -4,10 +4,12 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class FilmForm(forms.ModelForm):
+
+    YEARS = [x for x in range(1900,2020)]
     filmID = forms.CharField(widget = forms.HiddenInput(), required = False)
     title = forms.CharField(max_length = 128, help_text="Enter the film title.")
     director = forms.CharField(max_length = 128, help_text="Directors Name.")
-    releaseDate = forms.DateField(help_text="Release Date. [YEAR-MONTH-DAY]")
+    releaseDate = forms.DateField(help_text="Release Date.", widget=forms.SelectDateWidget(years=YEARS))
     blurb = forms.CharField(max_length = 512, help_text="Film Blurb.")
     poster = forms.ImageField(help_text="Film Poster.", required=False)
     slug = forms.SlugField(widget=forms.HiddenInput(), required = False)
@@ -32,13 +34,13 @@ class ReviewForm(forms.ModelForm):
         exclude=('reviewerID','fkID','date')
 
 class RatingForm(forms.ModelForm):
-    #userID = forms.ForeignKey(User)
-    #fkID = forms.ForeignKey(Film)
-    rating = forms.IntegerField(max_value = 5, min_value = 0,help_text="Score 1-5")
+    userID = forms.CharField(widget=forms.HiddenInput(),required=False)
+    fkID = forms.CharField(widget=forms.HiddenInput(),required=False)
+    rating = forms.IntegerField(max_value = 5, min_value = 0,help_text="Score 0-5")
 
     class Meta:
         model = Rating
-        exclude=(''),
+        fields = ('rating',)
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

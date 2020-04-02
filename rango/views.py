@@ -24,9 +24,9 @@ from django.db.models.functions import Length
 
 # Create your views here.
 def home(request):
-    film_list = Film.objects.order_by('rating')[:5]
-    review_list = Review.objects.order_by('-date')[:5]
 
+    review_list = Review.objects.order_by('-date')[:5]
+    film_list = Film.objects.all().order_by('-rating1')[:5]
     context_dict = {}
 
     context_dict['films'] = film_list
@@ -204,8 +204,8 @@ def search(request):
         films = Film.objects.filter(title__icontains=url_parameter).order_by(Length('title'))[:5]
         reviewers = Reviewer.objects.filter(displayName__icontains=url_parameter).order_by(Length('displayName'))[:5]
     else:
-        films = Film.objects.all().order_by(Length('title'))
-        reviewers = Reviewer.objects.all().order_by(Length('displayName'))
+        films = Film.objects.all().order_by(Length('title'))[:5]
+        reviewers = Reviewer.objects.all().order_by(Length('displayName'))[:5]
 
     context_dict['films'] = films
     context_dict['reviewers'] = reviewers
@@ -218,3 +218,40 @@ def search(request):
 
 
     return render(request,"search.html",context=context_dict)
+
+def add_rating(request, film_name_slug):
+    context_dict={}
+    form = RatingForm()
+
+    try:
+        film = Film.objects.get(slug = film_name_slug)
+    except Film.DoesNotExist:
+        film = None
+
+    try:
+        userCur = Rating.objects.filter(userID = request.user)
+        userCur = userCur.filter(fkID=film)
+    except Rating.DoesNotExist:
+        userCur = None
+
+    if request.method == 'POST':
+        form = RatingForm(request.POST)
+        if form.is_valid():
+
+            rating=form.save(commit=False)
+            rating.userID = request.user
+            rating.fkID = Film.objects.get(slug=film_name_slug)
+
+
+            rating.save()
+
+            return redirect(reverse('rango:show_film', kwargs={'film_name_slug': film_name_slug}))
+
+        else:
+            print(form.errors)
+
+    context_dict['userCur'] = userCur
+    context_dict['form']=form
+    context_dict['film']=film
+
+    return render(request,'add_rating.html',context=context_dict)

@@ -13,7 +13,7 @@
         <ul>
             {% for film in films %}
                 <li>
-                    <a href="{% url 'rango:show_film' film.slug%}">{{ film.title }} : {{ film.score }}/5</a>
+                    <a href="{% url 'rango:show_film' film.slug%}">{{ film.title }} : [{{ film.rating1 }} {{film.rating2}}/ 5]</a>
                 </li>
             {% endfor %}
         </ul>
