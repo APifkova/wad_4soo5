@@ -14,8 +14,6 @@
     animation-direction: alternate;
   }
 
-/* stylelint-disable selector-list-comma-newline-after */
-
 /* header style */
 .header {
   line-height: 1;
@@ -23,19 +21,6 @@
   border-bottom: 1px solid #5F040C;
   padding-bottom: 1rem !important;
   padding-top: 1rem !important;
-
-}
-
-/* login, register, logout*/
-.header-elements {
-  border-color: #FFFFFF;
-  color: #FFFFFF;
-}
-
-.header-elements:hover {
-  border-color: #FFFFFF;
-  background-color: #FFFFFF;
-  color: #5F040C;
 }
 
 .header-divs {
@@ -68,6 +53,18 @@ position:relative;
 text-align: right;
 }
 
+/* login, register, logout*/
+.header-elements {
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+}
+
+.header-elements:hover {
+  border-color: #FFFFFF;
+  background-color: #FFFFFF;
+  color: #5F040C;
+}
+
 /* 4 screams out of 5*/
 .header-logo {
   font-family: "Playfair Display", Georgia, "Times New Roman", serif;
@@ -81,7 +78,6 @@ text-align: right;
 }
 
 /* navigation bar style */
-
 .nav {
   width: 100%;
   float: left;
@@ -118,27 +114,56 @@ text-align: right;
   font-weight: bold;
 }
 
+/* style of whole page */
 body {
-  background-color: #000000;
+  background-image: linear-gradient(#181818, #292929, #181818);
   height: 100%;
-  margin: 0
-}
-
-.box {
+  margin: 0;
   display: flex;
   flex-direction: column;
+  text-align: center ;
 }
 
+/* part where the content goes */
 .page-body {
-  flex: 1 1 auto;
-  background-color: white;
+  flex: 1 0 auto;
+  background-color: #CECECE;
   padding: 15px;
   width: 90%;
   margin-left: 5%;
+  height:100vh;
 }
 
 .content {
   color: black;
+  padding:2.5%;
+  text-align: justify;
+}
+
+/*.column-wrapper:after {
+  content: "";
+  display: table;
+  clear: both;
+  justify-content: space-between !important;
+}*/
+
+.card-col {
+  background-color: #900612;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  color: #FFFFFF;
+}
+
+
+
+.strong-text {
+  font-size: 1.2em
+}
+
+.form {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
 }
 
 /* misc style */
@@ -148,9 +173,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Footer */
 .footer {
-  flex: 0 1 auto;
+  flex-shrink:0;
   width: 100%;
   text-align: center;
   background: #ddd;
-
 }

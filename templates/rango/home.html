@@ -6,35 +6,67 @@
 
 {% block body_block %}
     {% if user.is_authenticated %}
-    <strong> Logged in as {{user}}</strong>
+    <p class="strong-text"> Logged in as {{user}}</p>
     {% endif %}
-    <h2>Highest Rated by Reviewers</h2>
-    {% if films %}
-        <ul>
-            {% for film in films %}
-                <li>
-                    <a href="{% url 'rango:show_film' film.slug%}">{{ film.title }} : {{ film.score }}/5</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <strong>There are no films</strong>
-    {% endif %}
+    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+    </p>
 
-    <h2>Recent reviews</h2>
-    {% if reviews %}
-        <ul>
-            {% for review in reviews %}
-                <li>
-                    <a href="{% url 'rango:show_reviewer' review.reviewerID.slug%}">{{review.reviewerID}}</a>
-                    left a review for: <a href="{% url 'rango:show_film' review.fkID.slug %}">{{review.fkID}}</a>.
-                    At {{review.date}}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <strong>No recent reviews</strong>
-    {% endif %}
+
+    <div class="container">
+        <div class="row">
+        <!-- top movies-->
+            <div class="col-md-6">
+                <div class="card card-col mb-6">
+                    <div class="card-body">
+                        <h2>Highest Rated Movies</h2>
+                        <p class="card-text">
+                        {% if films %}
+                        <ul>
+                        {% for film in films %}
+                            <li>
+                            <a href="{% url 'rango:show_film' film.slug%}">{{ film.title }} : {{ film.score }}/5</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p class="strong-text">There are no films.</p>
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- recent reviews -->
+            <div class="col-md-6">
+                <div class="card card-col mb-6">
+                    <div class="card-body">
+                        <h2>Most Recent Reviews</h2>
+                        <p class="card-text">
+                        {% if reviews %}
+                        <ul>
+                        {% for review in reviews %}
+                            <li>
+                            <a href="{% url 'rango:show_reviewer' review.reviewerID.slug%}">{{review.reviewerID}}</a>
+                            left a review for: <a href="{% url 'rango:show_film' review.fkID.slug %}">{{review.fkID}}</a>.
+                            At {{review.date}}
+                            </li>
+                        {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p class="strong-text">No recent reviews</p>
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
 
 
 {% endblock %}

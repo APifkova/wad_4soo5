@@ -32,56 +32,52 @@
     </head>
 
     <body >
-    <div class="box">
+            <header class="header ">
+                <div class="header-divs">
 
-        <header class="header ">
-            <div class="header-divs">
-
-              <div class="header-div-main">
-                <a class="header-logo" href="{% url 'rango:home' %}">4ScreamsOutOf5</a>
-              </div>
-              <div class="header-div-other ">
-                 {% if user.is_authenticated %}
-                    <a class="header-elements btn btn-sm btn-outline-secondary" href="{% url 'rango:logout' %}">Logout</a>
-                 {% else %}
-                    <a class="header-elements btn btn-sm btn-outline-secondary" href="{% url 'rango:login' %}">Login</a>
-                    <a class="header-elements btn btn-sm btn-outline-secondary" href="{% url 'rango:register' %}">Register</a>
-                 {% endif %}
-              </div>
+                  <div class="header-div-main">
+                    <a class="header-logo" href="{% url 'rango:home' %}">4ScreamsOutOf5</a>
+                  </div>
+                  <div class="header-div-other ">
+                     {% if user.is_authenticated %}
+                        <a class="header-elements btn btn-sm btn-outline-secondary" href="{% url 'rango:logout' %}">Logout</a>
+                     {% else %}
+                        <a class="header-elements btn btn-sm btn-outline-secondary" href="{% url 'rango:login' %}">Login</a>
+                        <a class="header-elements btn btn-sm btn-outline-secondary" href="{% url 'rango:register' %}">Register</a>
+                     {% endif %}
+                  </div>
+                </div>
+             </header>
+             <!-- navigation bar -->
+            <div class="nav ">
+                  <a class="nav-a" href="{% url 'rango:home' %}">Home</a>
+                  <a class="nav-a" href="{% url 'rango:about' %}">About</a>
+                  <a class="nav-a" href="{% url 'rango:search' %}">Search</a>
+                  {% if user.is_reviewer %}
+                    <a class=" nav-a " href="{% url 'rango:show_reviewer' user %}">My Reviewer Page</a>
+                  {% endif %}
+                  {% if user.is_admin %}
+                    <a class="nav-a " href = "{% url 'rango:add_film' %}">Add a New Film</a>
+                  {% endif %}
+                  {% if user.is_authenticated %}
+                    <a class="nav-a" href="{% url 'rango:logout' %}">Logout</a>
+                  {% else %}
+                    <a class="nav-a" href="{% url 'rango:login' %}">Login</a>
+                    <a class="nav-a" href="{% url 'rango:register' %}">Register</a>
+                  {% endif %}
             </div>
-         </header>
-
-         <!-- navigation bar -->
-        <div class="nav ">
-              <a class="nav-a" href="{% url 'rango:home' %}">Home</a>
-              <a class="nav-a" href="{% url 'rango:about' %}">About</a>
-              <a class="nav-a" href="{% url 'rango:search' %}">Search</a>
-              {% if user.is_reviewer %}
-                <a class=" nav-a " href="{% url 'rango:show_reviewer' user %}">My Reviewer Page</a>
-              {% endif %}
-              {% if user.is_admin %}
-                <a class="nav-a " href = "{% url 'rango:add_film' %}">Add a New Film</a>
-              {% endif %}
-              {% if user.is_authenticated %}
-                <a class="nav-a" href="{% url 'rango:logout' %}">Logout</a>
-              {% else %}
-                <a class="nav-a" href="{% url 'rango:login' %}">Login</a>
-                <a class="nav-a" href="{% url 'rango:register' %}">Register</a>
-              {% endif %}
-        </div>
-        </div>
-        <div class="page-body ">
-            <div class="content">
-                {% block body_block %}
-                {% endblock %}
             </div>
-        </div>
-
-        <footer class="footer ">
-        {% block footer %}
-            <script type="text/javascript" src='{% static "javascript/main.js" %}'></script>
-        {% endblock %}
-        </footer>
-    </div>
+            <div class="page-body ">
+                <div class="content">
+                    {% block body_block %}
+                    {% endblock %}
+                </div>
+            </div>
+            <footer class="footer ">
+            {% block footer %}
+                <script type="text/javascript" src='{% static "javascript/main.js" %}'></script>
+                <p>yolo</p>
+            {% endblock %}
+            </footer>
     </body>
 </html>
