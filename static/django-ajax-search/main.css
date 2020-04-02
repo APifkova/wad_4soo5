@@ -21,8 +21,12 @@
   line-height: 1;
   background-color: #900612;
   border-bottom: 1px solid #5F040C;
+  padding-bottom: 1rem !important;
+  padding-top: 1rem !important;
+
 }
 
+/* login, register, logout*/
 .header-elements {
   border-color: #FFFFFF;
   color: #FFFFFF;
@@ -36,19 +40,35 @@
 
 .header-divs {
   position: relative;
-  /*width: 100%;*/
-  padding-right: 40px;
-  padding-left: 40px;
+  width: 100%;
+  padding-right: 20px;
+  padding-left: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  -webkit-box-align: center !important;
+  align-items: center !important;
+
+  -webkit-box-pack: justify !important;
+  justify-content: space-between !important;
+
 }
 
 .header-div-main {
-width: 70%;
+width: calc(80% - 40px);
+text-align: center;
+position:relative;
 }
 
 .header-div-other {
-width: 30%;
+width: calc(20% - 40px);
+position:relative;
+text-align: right;
 }
 
+/* 4 screams out of 5*/
 .header-logo {
   font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   font-size: 2.25rem;
@@ -61,133 +81,76 @@ width: 30%;
 }
 
 /* navigation bar style */
-nav {
-    margin-bottom: 4em;
-   }
 
-.navbar {
+.nav {
   width: 100%;
-  background-color: #555;
+  float: left;
+  background-color: #900612;
   overflow: auto;
+  display: flex;
+  flex-wrap:nowrap;
+  -webkit-box-pack: justify !important;
+  justify-content: space-between !important;
+  flex: 0 1 auto;
 }
 
 /* Navigation links */
-.navbar a {
+.nav-a {
+  flex: 1 0 auto;
+  padding:.5rem !important;
   float: left;
-  padding: 12px;
-  color: white;
+  color: #FFFFFF;
   text-decoration: none;
   font-size: 17px;
-  width: 25%; /* Four equal-width links. If you have two links, use 50%, and 33.33% for three links, etc.. */
   text-align: center; /* If you want the text to be centered */
 }
 
 /* Add a background color on mouse-over */
-.navbar a:hover {
-  background-color: #000;
+.nav-a:hover {
+  background-color: #FFFFFF;
+  color: #5F040C;
+  text-decoration: none;
 }
 
 /* Style the current/active link */
-.navbar a.active {
-  background-color: #4CAF50;
+.nav-a.active {
+  color: #FFFFFF;
+  font-weight: bold;
 }
 
-/* Add responsiveness - on screens less than 500px, make the navigation links appear on top of each other, instead of next to each other */
-@media screen and (max-width: 500px) {
-  .navbar a {
-    float: none;
-    display: block;
-    width: 100%;
-    text-align: left; /* If you want the text to be left-aligned on small screens */
-  }
+body {
+  background-color: #000000;
+  height: 100%;
+  margin: 0
 }
 
-/*nav {
-    margin-bottom: 4em;
-
-}
-
-.nav-a {
-
-  color: #FF3AF5;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  justify-content: space-between !important;
-}
-
-.nav-scroller {
-  position: relative;
-  z-index: 2;
-  height: 2.75rem;
-  overflow-y: hidden;
-}
-
-.nav-scroller .nav {
-  display: -ms-flexbox;
+.box {
   display: flex;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  padding-bottom: 1rem;
-  margin-top: -1px;
-  overflow-x: auto;
-  text-align: center;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
+  flex-direction: column;
 }
 
-.nav-scroller .nav-link {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-  font-size: .875rem;
-}*/
+.page-body {
+  flex: 1 1 auto;
+  background-color: white;
+  padding: 15px;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.content {
+  color: black;
+}
 
 /* misc style */
 h1, h2, h3, h4, h5, h6 {
   font-family: "Playfair Display", Georgia, "Times New Roman", serif;
 }
 
-.display-4 {
-  font-size: 2.5rem;
-}
-@media (min-width: 768px) {
-  .display-4 {
-    font-size: 3rem;
-  }
-}
-
-.card-img-right {
-  height: 100%;
-  border-radius: 0 3px 3px 0;
-}
-
-.flex-auto {
-  -ms-flex: 0 0 auto;
-  flex: 0 0 auto;
-}
-
-.h-250 { height: 250px; }
-@media (min-width: 768px) {
-  .h-md-250 { height: 250px; }
-}
-
-/* Pagination */
-.blog-pagination {
-  margin-bottom: 4rem;
-}
-.blog-pagination > .btn {
-  border-radius: 2rem;
-}
-
-
 /* Footer */
-.blog-footer {
-  padding: 2.5rem 0;
-  color: #999;
+.footer {
+  flex: 0 1 auto;
+  width: 100%;
   text-align: center;
-  background-color: #f9f9f9;
-  border-top: .05rem solid #e5e5e5;
-}
-.blog-footer p:last-child {
-  margin-bottom: 0;
+  background: #ddd;
+
 }

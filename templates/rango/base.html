@@ -31,15 +31,16 @@
         <link href='{% static "main.css" %}' rel="stylesheet" media="screen">
     </head>
 
-    <body>
-      <!--<div class="container">-->
-         <header class="header py-3">
-            <div class="header-divs row flex-nowrap justify-content-between align-items-center">
+    <body >
+    <div class="box">
 
-              <div class="header-div-main header-divs col-4 text-center">
-                <a class="header-logo" href="#">4ScreamsOutOf5</a>
+        <header class="header ">
+            <div class="header-divs">
+
+              <div class="header-div-main">
+                <a class="header-logo" href="{% url 'rango:home' %}">4ScreamsOutOf5</a>
               </div>
-              <div class="header-div-other header-divs col-4 d-flex justify-content-end align-items-center">
+              <div class="header-div-other ">
                  {% if user.is_authenticated %}
                     <a class="header-elements btn btn-sm btn-outline-secondary" href="{% url 'rango:logout' %}">Logout</a>
                  {% else %}
@@ -50,36 +51,37 @@
             </div>
          </header>
 
-        <div class="nav nav-scroller py-1 mb-2">
-          <nav class="nav d-flex justify-content-between">
-              <a class="nav-a p-2 " href="{% url 'rango:about' %}">About</a>
-              <a class="nav-a p-2 " href="{% url 'rango:home' %}">Home</a>
-              <a class="nav-a p-2 text-muted" href="{% url 'rango:search' %}">Search</a>
+         <!-- navigation bar -->
+        <div class="nav ">
+              <a class="nav-a" href="{% url 'rango:home' %}">Home</a>
+              <a class="nav-a" href="{% url 'rango:about' %}">About</a>
+              <a class="nav-a" href="{% url 'rango:search' %}">Search</a>
               {% if user.is_reviewer %}
-                <a class="p-2 text-muted" href="{% url 'rango:show_reviewer' user %}">My Reviewer Page</a>
+                <a class=" nav-a " href="{% url 'rango:show_reviewer' user %}">My Reviewer Page</a>
               {% endif %}
               {% if user.is_admin %}
-                <a class="nav-a p-2 text-muted" href = "{% url 'rango:add_film' %}">Add a New Film</a>
+                <a class="nav-a " href = "{% url 'rango:add_film' %}">Add a New Film</a>
               {% endif %}
               {% if user.is_authenticated %}
-                <a class="p-2 text-muted" href="{% url 'rango:logout' %}">Logout</a>
+                <a class="nav-a" href="{% url 'rango:logout' %}">Logout</a>
               {% else %}
-                <a class="p-2 text-muted" href="{% url 'rango:login' %}">Login</a>
-                <a class="p-2 text-muted" href="{% url 'rango:register' %}">Register</a>
+                <a class="nav-a" href="{% url 'rango:login' %}">Login</a>
+                <a class="nav-a" href="{% url 'rango:register' %}">Register</a>
               {% endif %}
-          </nav>
+        </div>
+        </div>
+        <div class="page-body ">
+            <div class="content">
+                {% block body_block %}
+                {% endblock %}
+            </div>
         </div>
 
-        <div>
-            {% block body_block %}
-            {% endblock %}
-        </div>
-        <hr />
-
-
-    {% block footer %}
-        <script type="text/javascript" src='{% static "javascript/main.js" %}'></script>
-    {% endblock %}
-      <!--</div>-->
+        <footer class="footer ">
+        {% block footer %}
+            <script type="text/javascript" src='{% static "javascript/main.js" %}'></script>
+        {% endblock %}
+        </footer>
+    </div>
     </body>
 </html>
