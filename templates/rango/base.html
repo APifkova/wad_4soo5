@@ -8,17 +8,31 @@
     <head lang="en">
         <link rel="stylesheet" href="{% static 'base.css' %}">
         <meta charset="UTF-8">
+<<<<<<< HEAD
+=======
+        <meta name="viewport" content="width=device-width, inital-scale=1, shrink-to-fit=no">
+        <link rel="icon" href="{% static 'images/favicon.ico' %}">
+>>>>>>> 4c6dbb5ab63fe046026621681eee01b7336123e5
         <title>
-            4Sof5 -
+            4Soof5 -
             {% block title_block %}
                 BASE
             {% endblock %}
         </title>
+<<<<<<< HEAD
+=======
+
+        <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+>>>>>>> 4c6dbb5ab63fe046026621681eee01b7336123e5
 
 
         <script src="{% static 'javascript/jquery-3.4.1.min.js' %}"></script>
 
 
+<<<<<<< HEAD
 
     </head>
 
@@ -44,6 +58,56 @@
             {% endif %}
         </ul>
     </div>
+=======
+        <link href='{% static "main.css" %}' rel="stylesheet" media="screen">
+    </head>
+
+    <body>
+      <!--<div class="container">-->
+         <header class="header py-3">
+            <div class="header-divs row flex-nowrap justify-content-between align-items-center">
+
+              <div class="header-div-main header-divs col-4 text-center">
+                <a class="header-logo" href="#">4ScreamsOutOf5</a>
+              </div>
+              <div class="header-div-other header-divs col-4 d-flex justify-content-end align-items-center">
+                 {% if user.is_authenticated %}
+                    <a class="header-elements btn btn-sm btn-outline-secondary" href="{% url 'rango:logout' %}">Logout</a>
+                 {% else %}
+                    <a class="header-elements btn btn-sm btn-outline-secondary" href="{% url 'rango:login' %}">Login</a>
+                    <a class="header-elements btn btn-sm btn-outline-secondary" href="{% url 'rango:register' %}">Register</a>
+                 {% endif %}
+              </div>
+            </div>
+         </header>
+
+        <div class="nav nav-scroller py-1 mb-2">
+          <nav class="nav d-flex justify-content-between">
+              <a class="nav-a p-2 " href="{% url 'rango:about' %}">About</a>
+              <a class="nav-a p-2 " href="{% url 'rango:home' %}">Home</a>
+              <a class="nav-a p-2 text-muted" href="{% url 'rango:search' %}">Search</a>
+              {% if user.is_reviewer %}
+                <a class="p-2 text-muted" href="{% url 'rango:show_reviewer' user %}">My Reviewer Page</a>
+              {% endif %}
+              {% if user.is_admin %}
+                <a class="nav-a p-2 text-muted" href = "{% url 'rango:add_film' %}">Add a New Film</a>
+              {% endif %}
+              {% if user.is_authenticated %}
+                <a class="p-2 text-muted" href="{% url 'rango:logout' %}">Logout</a>
+              {% else %}
+                <a class="p-2 text-muted" href="{% url 'rango:login' %}">Login</a>
+                <a class="p-2 text-muted" href="{% url 'rango:register' %}">Register</a>
+              {% endif %}
+          </nav>
+        </div>
+
+        <div>
+            {% block body_block %}
+            {% endblock %}
+        </div>
+        <hr />
+
+>>>>>>> 4c6dbb5ab63fe046026621681eee01b7336123e5
 
         <div>
             {% block body_block %}
@@ -52,6 +116,7 @@
 
 
     {% block footer %}
+<<<<<<< HEAD
         <script type="text/javascript" src="{% static 'javascript/main.js' %}"></script>
         <script type="text/javascript" src="{%static 'jquery.activeNavigation.js' %}"></script>
 	    <script type="text/javascript">
@@ -60,6 +125,10 @@
         });
         </script>
 
+=======
+        <script type="text/javascript" src='{% static "javascript/main.js" %}'></script>
+>>>>>>> 4c6dbb5ab63fe046026621681eee01b7336123e5
     {% endblock %}
+      <!--</div>-->
     </body>
 </html>
