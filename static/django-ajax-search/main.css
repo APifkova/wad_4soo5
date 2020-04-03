@@ -131,7 +131,7 @@ body {
   padding: 15px;
   width: 90%;
   margin-left: 5%;
-  height:100vh;
+  height:100%;
 }
 
 .content {
@@ -153,7 +153,15 @@ body {
   color: #FFFFFF;
 }
 
-
+.card-a {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-weight: bold;
+}
+.card-a:hover {
+  color: #FFFFFF;
+  font-weight: bold;
+}
 
 .strong-text {
   font-size: 1.2em
